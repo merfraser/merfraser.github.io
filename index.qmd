@@ -1,7 +1,16 @@
 ---
 title: "Meredith Fraser"
+about:
+  template: jolla
+  image: images/wildflowers.jpeg
 ---
 
-This is a Quarto website.
+I am from Halifax, Nova Scotia. I have a Bachelor of Science in Marine Biology and a Master's in Resource Management. 
+I have a keen interest in marine and ocean sciences, and I am an advocate for evidence-based environmental conservation. 
+Prior to MDS I researched seagrass ecology on the Atlantic Coast of NS and worked in marine plant management on both 
+the Pacific and Atlantic Coasts of Canada. I am currently completing the Master's of Data Science (MDS) program at the 
+University of British Columbia. In the MDS program I am building my knowledge and applied skills in programming 
+and modelling to utilize data to answer community-driven research questions in the fields of marine and environmental 
+sciences.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+
