@@ -2,7 +2,15 @@
 title: "About"
 ---
 
+I have a keen interest in marine and ocean sciences, and I am an advocate for evidence-based and community-led environmental stewardship.
+I have over four years of professional experience in both scientific research and applied resource management roles with a focus on marine plant 
+biology and ecology. Over the last three years in my role as an Aquatic Science Biologist with Fisheries and Oceans Canada, I have conducted 
+several experiments to measure the climate-driven responses of eelgrass, a coastal foundation species that provides fish habitat, protects 
+our shorelines, and sequesters blue carbon.  
+
 ## Education 
+**Master of Data Science - University of British Columbia** (August 2026 - present)
+
 **Master of Resource Management - Simon Fraser University** (2019 - 2022)
 
 Member of the Ocean's Relations Collaborative
@@ -23,7 +31,11 @@ Bedford Institute of Oceanography, Fisheries and Oceans Canada
 
 ## Why data science?
 
+In the MDS program, I am excited to further develop my knowledge of modeling and statistical analyses to be able to to draw insights 
+in support of community-led research questions and contribute to advancements in environmental management and conservation.
 
 ## Hobbies
 
-Outside of work, I am gra our coastlines, including hiking and swimming, 
+Outside of work, I enjoy hiking, swimming, backcountry camping trips, and am learning to sew/make quilts!
+
+*I acknowledge with gratitude that I live and work on the traditional, ancestral, unceded territory of the xʷməθkʷəy̓əm (Musqueam) First Nation.*
