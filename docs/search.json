@@ -1,10 +1,10 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
     "section": "",
-    "text": "Master of Resource Management - Simon Fraser University (2019 - 2022)\nMember of the Ocean’s Relations Collaborative\nMaster’s thesis - “Grazing by kelp crabs amplifies impacts of climate-induxed bryozoan outbreaks on kelp”\nBachelor of Science - Dalhousie University (2013-2018)\nCombined Honours in Marine Biology and Environment, Society and Sustainability, Co-op Program"
+    "text": "My first weeks in MDS\n\n\n\n\n\n\n\n\nSep 8, 2026\n\n\nMeredith Fraser\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -14,39 +14,25 @@
     "text": "I am from Halifax, Nova Scotia. I have a Bachelor of Science in Marine Biology and a Master’s in Resource Management. I have a keen interest in marine and ocean sciences, and I am an advocate for evidence-based environmental conservation. Prior to MDS I researched seagrass ecology on the Atlantic Coast of NS and worked in marine plant management on both the Pacific and Atlantic Coasts of Canada. I am currently completing the Master’s of Data Science (MDS) program at the University of British Columbia. In the MDS program I am building my knowledge and applied skills in programming and modelling to utilize data to answer community-driven research questions in the fields of marine and environmental sciences."
   },
   {
-    "objectID": "about.html#experience",
-    "href": "about.html#experience",
-    "title": "About",
-    "section": "Experience",
-    "text": "Experience\nAquatic Science Biologist (September 2023 - July 2026) Bedford Institute of Oceanography, Fisheries and Oceans Canada"
+    "objectID": "posts/index.html",
+    "href": "posts/index.html",
+    "title": "My first weeks in MDS",
+    "section": "",
+    "text": "Orientation day on campus.\n\n\nTHREE PARAGRAPHS HERE."
   },
   {
-    "objectID": "about.html#why-data-science",
-    "href": "about.html#why-data-science",
-    "title": "About",
-    "section": "Why data science?",
-    "text": "Why data science?"
-  },
-  {
-    "objectID": "about.html#fun",
-    "href": "about.html#fun",
+    "objectID": "about.html",
+    "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "hobbies, sports, music, food, what you do on a weekend."
+    "text": "I have a keen interest in marine and ocean sciences, and I am an advocate for evidence-based and community-led environmental stewardship. I have over four years of professional experience in both scientific research and applied resource management roles with a focus on marine plant biology and ecology. Over the last three years in my role as an Aquatic Science Biologist with Fisheries and Oceans Canada, I have conducted several experiments to measure the climate-driven responses of eelgrass, a coastal foundation species that provides fish habitat, protects our shorelines, and sequesters blue carbon."
   },
   {
     "objectID": "about.html#education",
     "href": "about.html#education",
     "title": "About",
-    "section": "",
-    "text": "Master of Resource Management - Simon Fraser University (2019 - 2022)\nMember of the Ocean’s Relations Collaborative\nMaster’s thesis - “Grazing by kelp crabs amplifies impacts of climate-induxed bryozoan outbreaks on kelp”\nBachelor of Science - Dalhousie University (2013-2018)\nCombined Honours in Marine Biology and Environment, Society and Sustainability, Co-op Program"
-  },
-  {
-    "objectID": "about.html#hobbies",
-    "href": "about.html#hobbies",
-    "title": "About",
-    "section": "Hobbies",
-    "text": "Hobbies\nOutside of work, I am gra our coastlines, including hiking and swimming,"
+    "section": "Education",
+    "text": "Education\nMaster of Data Science - University of British Columbia (August 2026 - present)\nMaster of Resource Management - Simon Fraser University (2019 - 2022)\nMember of the Ocean’s Relations Collaborative\nMaster’s thesis - “Grazing by kelp crabs amplifies impacts of climate-induxed bryozoan outbreaks on kelp”\nBachelor of Science - Dalhousie University (2013-2018)\nCombined Honours in Marine Biology and Environment, Society and Sustainability, Co-op Program"
   },
   {
     "objectID": "about.html#recent-work-experience",
@@ -54,5 +40,19 @@
     "title": "About",
     "section": "Recent Work Experience",
     "text": "Recent Work Experience\nAquatic Science Biologist (September 2023 - July 2026)\nBedford Institute of Oceanography, Fisheries and Oceans Canada"
+  },
+  {
+    "objectID": "about.html#why-data-science",
+    "href": "about.html#why-data-science",
+    "title": "About",
+    "section": "Why data science?",
+    "text": "Why data science?\nIn the MDS program, I am excited to further develop my knowledge of modeling and statistical analyses to be able to to draw insights in support of community-led research questions and contribute to advancements in environmental management and conservation."
+  },
+  {
+    "objectID": "about.html#hobbies",
+    "href": "about.html#hobbies",
+    "title": "About",
+    "section": "Hobbies",
+    "text": "Hobbies\nOutside of work, I enjoy hiking, swimming, backcountry camping trips, and am learning to sew/make quilts!\nI acknowledge with gratitude that I live and work on the traditional, ancestral, unceded territory of the xʷməθkʷəy̓əm (Musqueam) First Nation."
   }
 ]
