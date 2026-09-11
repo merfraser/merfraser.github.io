@@ -1,9 +1,24 @@
 ---
 title: "My first weeks in MDS"
 author: "Meredith Fraser"
-date: 2026-09-08
+date: 2026-09-10
 ---
 
-![Orientation day on campus.](orientation.jpg)
+![First couple of weeks on campus.](/images/first_weeks_banner.jpeg)
 
-THREE PARAGRAPHS HERE.
+The MDS program kicked off in the last week of August, 2026 with a whirlwind three days of orientation 
+events. During orientation, I had the chance to meet my fellow classmates, professors, and all the 
+folks who help keep the program running, as well as get acquainted with the program structure and the UBC 
+West Point Grey campus. 
+
+Having spent very little time on the UBC campus prior to starting the program, I was surprised by 
+just how big campus is (read: accepting any and all insight on shortcuts for commuting between classes 
+in the 10 min breaks) and also by how much green space there is on campus. Having access to the Pacific 
+Spirit Regional Park has been a gift and I anticipate going on many trail runs in the park over the next 
+10 months while I complete the MDS program.
+
+While I did manage to get lost on several occasions on campus in these first few weeks and I suspect 
+it may be a few more weeks before git add/commit/push become as second nature to me as breathing is, 
+I would like to think I am otherwise finding my feet in the MDS program and my new home in Vancouver. 
+The courses are engaging, the materials interesting, our professors and TAs are helpful and supportive, 
+and I am looking forward to what comes next. 
