@@ -4,4 +4,14 @@ author: "Meredith Fraser"
 date: 2026-09-22
 ---
 
-asdfg
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+library(tidyverse)
+library(palmerpenguins)
+```
+
+```{r}
+head(penguins)
+```
