@@ -4,7 +4,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "My first weeks in MDS\n\n\n\n\n\n\n\n\nSep 10, 2026\n\n\nMeredith Fraser\n\n\n\n\n\nNo matching items"
+    "text": "Visualizing the palmer penguins data Python\n\n\n\n\n\n\n\n\nSep 22, 2026\n\n\nMeredith Fraser\n\n\n\n\n\n\n\n\n\n\n\n\nVisualizing the palmer penguins data with R\n\n\n\n\n\n\n\n\nSep 22, 2026\n\n\nMeredith Fraser\n\n\n\n\n\n\n\n\n\n\n\n\nMy first weeks in MDS\n\n\n\n\n\n\n\n\nSep 10, 2026\n\n\nMeredith Fraser\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -19,6 +19,20 @@
     "title": "My first weeks in MDS",
     "section": "",
     "text": "First couple of weeks on campus.\n\n\nThe MDS program kicked off in the last week of August, 2026 with a whirlwind three days of orientation events. During orientation, I had the chance to meet my fellow classmates, professors, and all the folks who help keep the program running, as well as get acquainted with the program structure and the UBC West Point Grey campus.\nHaving spent very little time on the UBC campus prior to starting the program, I was surprised by just how big campus is (read: accepting any and all insight on shortcuts for commuting between classes in the 10 min breaks) and also by how much green space there is on campus. Having access to the Pacific Spirit Regional Park has been a gift and I anticipate going on many trail runs in the park over the next 10 months while I complete the MDS program.\nWhile I did manage to get lost on several occasions on campus in these first few weeks and I suspect it may be a few more weeks before git add/commit/push become as second nature to me as breathing is, I would like to think I am otherwise finding my feet in the MDS program and my new home in Vancouver. The courses are engaging, the materials interesting, our professors and TAs are helpful and supportive, and I am looking forward to what comes next."
+  },
+  {
+    "objectID": "posts/python_penguins/index.html",
+    "href": "posts/python_penguins/index.html",
+    "title": "Visualizing the palmer penguins data Python",
+    "section": "",
+    "text": "We are going to examine the palmer penguins data from SOURCE\nI am interested in finding out which penguin species and from which island have the longest average flipper length (cm)\n\n# Import the required libraries\nimport pandas as pd\nfrom palmerpenguins import load_penguins\n\n# Load the penguins dataset\npenguins = load_penguins()\n\n# Clean up the dataset and prep for summarizing and visualizing\n## Drop `NaNs` from the flipper_length_mm column (the variable we are interested in) \npenguins_clean = penguins.dropna(subset=['flipper_length_mm'])\n## Create a new column: flipper_length_cm (converting mm to cm)\npenguins_clean['flipper_length_cm'] = penguins_clean['flipper_length_mm']/100\n\n# Print the first 6 lines of the tidy penguins dataset\nprint(penguins_clean.head())\n\n  species     island  bill_length_mm  bill_depth_mm  flipper_length_mm  \\\n0  Adelie  Torgersen            39.1           18.7              181.0   \n1  Adelie  Torgersen            39.5           17.4              186.0   \n2  Adelie  Torgersen            40.3           18.0              195.0   \n4  Adelie  Torgersen            36.7           19.3              193.0   \n5  Adelie  Torgersen            39.3           20.6              190.0   \n\n   body_mass_g     sex  year  flipper_length_cm  \n0       3750.0    male  2007               1.81  \n1       3800.0  female  2007               1.86  \n2       3250.0  female  2007               1.95  \n4       3450.0  female  2007               1.93  \n5       3650.0    male  2007               1.90  \n\n\nSummarise the mean flipper length by penguin species and island.\n\npenguins_summary = (\n    penguins_clean\n    .loc[:,['species','island','flipper_length_cm']]\n    .groupby(['species','island'])\n    .mean()\n    .sort_values(by='flipper_length_cm',ascending=False)\n    .reset_index()\n)\nprint(penguins_summary.head())\n\n     species     island  flipper_length_cm\n0     Gentoo     Biscoe           2.171870\n1  Chinstrap      Dream           1.958235\n2     Adelie  Torgersen           1.911961\n3     Adelie      Dream           1.897321\n4     Adelie     Biscoe           1.887955\n\n\nPrint a table with the top 5 penguins by flipper length (measured in cm) by species and the island they were sampled on."
+  },
+  {
+    "objectID": "posts/R_penguins/index.html",
+    "href": "posts/R_penguins/index.html",
+    "title": "Visualizing the palmer penguins data with R",
+    "section": "",
+    "text": "asdfg"
   },
   {
     "objectID": "about.html",

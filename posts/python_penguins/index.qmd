@@ -1,0 +1,56 @@
+---
+title: "Visualizing the palmer penguins data Python"
+author: "Meredith Fraser"
+date: 2026-09-22
+---
+
+We are going to examine the palmer penguins data from SOURCE
+
+I am interested in finding out which penguin species and from which island have the longest average flipper length (cm)
+
+```{python}
+#| echo: true
+#| message: false
+#| warning: false
+# Import the required libraries
+import pandas as pd
+from palmerpenguins import load_penguins
+
+# Load the penguins dataset
+penguins = load_penguins()
+
+# Clean up the dataset and prep for summarizing and visualizing
+## Drop `NaNs` from the flipper_length_mm column (the variable we are interested in) 
+penguins_clean = penguins.dropna(subset=['flipper_length_mm'])
+## Create a new column: flipper_length_cm (converting mm to cm)
+penguins_clean['flipper_length_cm'] = penguins_clean['flipper_length_mm']/100
+
+# Print the first 6 lines of the tidy penguins dataset
+print(penguins_clean.head())
+```
+
+Summarise the mean flipper length by penguin species and island.
+
+```{python}
+#| echo: true
+penguins_summary = (
+    penguins_clean
+    .loc[:,['species','island','flipper_length_cm']]
+    .groupby(['species','island'])
+    .mean()
+    .sort_values(by='flipper_length_cm',ascending=False)
+    .reset_index()
+)
+print(penguins_summary.head())
+```
+
+Print a table with the top 5 penguins by flipper length (measured in cm) by species and the island they were sampled on.
+
+```{python}
+#| echo: true
+#| label: fig-penguin-mass
+#| table-cap: "Flipper length of penguins by species."
+
+
+
+```

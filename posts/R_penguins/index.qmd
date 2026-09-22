@@ -1,0 +1,7 @@
+---
+title: "Visualizing the palmer penguins data with R"
+author: "Meredith Fraser"
+date: 2026-09-22
+---
+
+asdfg
