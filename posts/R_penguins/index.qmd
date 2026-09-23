@@ -1,7 +1,7 @@
 ---
 title: "Visualizing the palmer penguins data with R"
 author: "Meredith Fraser"
-date: 2026-09-22
+date: 2026-09-23
 ---
 
 In this blog, we are going to examine the palmer penguins dataset (Gorman et al., 2014; Palmer Penguins Dataset, 2014) using R. Data were collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER. 
@@ -31,7 +31,7 @@ penguins_clean <- penguins |>
 head(penguins_clean)
 ```
 
-Now we can group the tidied data by island, to calculate the mean flipper length in cm for all Adelie penguins measured on that island.
+Now we can group the tidied data by island, to calculate the maximum flipper length in cm for all of the Adelie penguins measured on that island.
 
 ```{r}
 penguins_summary <- penguins_clean |>
@@ -48,7 +48,7 @@ I want to produce a bar plot of maximum flipper length (cm), by island for the A
 ggplot(data = penguins_summary, mapping = aes(x = island, 
                                       y = max_flipper_length_cm,
                                      fill = island)) +
-    geom_col(size = 2) +
+    geom_col() +
     xlab("Penguin Species") +
     ylab("Maximum flipper length (cm)") +
     theme_bw() +

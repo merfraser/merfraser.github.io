@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Meredith Fraser">
-<meta name="dcterms.date" content="2026-09-22">
+<meta name="dcterms.date" content="2026-09-23">
 
 <title>Visualizing the palmer penguins data with Python – Meredith Fraser</title>
 <style>
@@ -183,7 +183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 22, 2026</p>
+      <p class="date">September 23, 2026</p>
     </div>
   </div>
   
@@ -198,7 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In this blog, we are going to examine the palmer penguins dataset (Gorman et al., 2014; Palmer Penguins Dataset, 2014) using python. Data were collected and made available by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica LTER.</p>
 <p>I am interested in finding out which island (recorded from 3 islands in the Palmer Archipelage, Antarctica) has the longest (maximum) flipper length (cm) for all the Adelie penguin species measured (only species with flipper length measurements from all 3 islands).</p>
 <p>I will first start by organizing or ‘tidying’ the data for our question.</p>
-<div id="9011653d" class="cell" data-message="false" data-execution_count="1">
+<div id="fc4bb930" class="cell" data-message="false" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the required libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> palmerpenguins <span class="im">import</span> load_penguins</span>
@@ -225,8 +225,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5  Torgersen               1.90</code></pre>
 </div>
 </div>
-<p>Now we can group the tidied data by island, to calculate the max flipper length in cm, and then sort the resulting maximum flipper length measurements from longest to shortest.</p>
-<div id="d6e23277" class="cell" data-execution_count="2">
+<p>Now we can group the tidied data by island, to calculate the maximum flipper length, in cm, and then sort the resulting maximum flipper length measurements from longest to shortest.</p>
+<div id="1d0bff6f" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>penguins_summary <span class="op">=</span> (</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    penguins_clean</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    .groupby([<span class="st">'island'</span>])[<span class="st">'flipper_length_cm'</span>]</span>
@@ -244,25 +244,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style type="text/css">
 </style>
 
-<table id="T_eef72" class="caption-top table table-sm table-striped small">
+<table id="T_f034f" class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th id="T_eef72_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">island</th>
-<th id="T_eef72_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">flipper_length_cm</th>
+<th id="T_f034f_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">island</th>
+<th id="T_f034f_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">flipper_length_cm</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td id="T_eef72_row0_col0" class="data row0 col0">Torgersen</td>
-<td id="T_eef72_row0_col1" class="data row0 col1">2.100000</td>
+<td id="T_f034f_row0_col0" class="data row0 col0">Torgersen</td>
+<td id="T_f034f_row0_col1" class="data row0 col1">2.100000</td>
 </tr>
 <tr class="even">
-<td id="T_eef72_row1_col0" class="data row1 col0">Dream</td>
-<td id="T_eef72_row1_col1" class="data row1 col1">2.080000</td>
+<td id="T_f034f_row1_col0" class="data row1 col0">Dream</td>
+<td id="T_f034f_row1_col1" class="data row1 col1">2.080000</td>
 </tr>
 <tr class="odd">
-<td id="T_eef72_row2_col0" class="data row2 col0">Biscoe</td>
-<td id="T_eef72_row2_col1" class="data row2 col1">2.030000</td>
+<td id="T_f034f_row2_col0" class="data row2 col0">Biscoe</td>
+<td id="T_f034f_row2_col1" class="data row2 col1">2.030000</td>
 </tr>
 </tbody>
 </table>
