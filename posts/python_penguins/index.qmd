@@ -1,12 +1,12 @@
 ---
-title: "Visualizing the palmer penguins data Python"
+title: "Visualizing the palmer penguins data with Python"
 author: "Meredith Fraser"
 date: 2026-09-22
 ---
 
 In this blog, we are going to examine the palmer penguins dataset (Gorman et al., 2014; Palmer Penguins Dataset, 2014) using python. Data were collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER. 
 
-I am interested in finding out which island (recorded from 3 islands in the Palmer Archipelage, Antarctica) has the longest average flipper length (cm) for all the Adelie penguin species measured (only species with flipper length measurements from all 3 islands).
+I am interested in finding out which island (recorded from 3 islands in the Palmer Archipelage, Antarctica) has the longest (maximum) flipper length (cm) for all the Adelie penguin species measured (only species with flipper length measurements from all 3 islands).
 
 I will first start by organizing or 'tidying' the data for our question.
 
@@ -33,20 +33,21 @@ penguins_clean = penguins_clean.query("species == 'Adelie'").loc[:,['island','fl
 print(penguins_clean.head())
 ```
 
-Now we can group the tidied data by island, to calculate the mean flipper length in cm, and then sort the resulting means from longest to shortest.
+Now we can group the tidied data by island, to calculate the max flipper length in cm, and then sort the resulting maximum flipper length measurements from longest to shortest.
 
 ```{python}
 #| echo: true
 penguins_summary = (
     penguins_clean
     .groupby(['island'])['flipper_length_cm']
-    .mean()
+    .max()
+    .round(3)
     .sort_values(ascending=False)
     .reset_index()
 )
 ```
 
-I want to produce a clean-looking table with the three islands sorted according to longest flipper length (measured in cm) for the Adelie penguin species.
+I want to produce a clean-looking table with the three islands sorted according to longest maximum flipper length (measured in cm) for the Adelie penguin species.
 
 ```{python}
 #| echo: true
@@ -56,7 +57,7 @@ Adelie_flipper_table = penguins_summary.style.hide(axis="index")
 Adelie_flipper_table
 ```
 
-As you can see in the table, the average flipper length (cm) for all Adelie penguin species is very similar across the three islands sampled, however Adelie penguins on Torgersen had the longest flipper length on average.
+As you can see in the table, the maximum flipper length (cm) for all Adelie penguins is similar across the three islands sampled, however an Adelie penguin on Torgersen had the longest maximum flipper length (cm), then Dream, then Biscoe.
 
 **References**
 

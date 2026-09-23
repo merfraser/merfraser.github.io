@@ -6,7 +6,7 @@ date: 2026-09-22
 
 In this blog, we are going to examine the palmer penguins dataset (Gorman et al., 2014; Palmer Penguins Dataset, 2014) using R. Data were collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER. 
 
-I am interested in visualizing which island (recorded from 3 islands in the Palmer Archipelage, Antarctica) has the longest average flipper length (cm) for all the Adelie penguin species measured (only species with flipper length measurements from all 3 islands).
+I am interested in visualizing which island (recorded from 3 islands in the Palmer Archipelage, Antarctica) has the longest maximum flipper length (cm) for all the Adelie penguin species measured (only species with flipper length measurements from all 3 islands).
 
 I will first start by organizing or 'tidying' the data for our question.
 
@@ -36,26 +36,26 @@ Now we can group the tidied data by island, to calculate the mean flipper length
 ```{r}
 penguins_summary <- penguins_clean |>
     group_by(island) |>
-    summarise(mean_flipper_length_cm = mean(flipper_length_cm)) 
+    summarise(max_flipper_length_cm = max(flipper_length_cm)) 
 ```
 
-I want to produce a bar plot of average flipper length (cm), by island for the Adelie penguin species.
+I want to produce a bar plot of maximum flipper length (cm), by island for the Adelie penguin species.
 
 ```{r}
 #| echo: true
 #| label: fig-Adelie-penguin-flipper-R
 #| table-cap: "Flipper length of species for the Adelie species"
 ggplot(data = penguins_summary, mapping = aes(x = island, 
-                                      y = mean_flipper_length_cm,
+                                      y = max_flipper_length_cm,
                                      fill = island)) +
     geom_col(size = 2) +
     xlab("Penguin Species") +
-    ylab("Flipper length (cm)") +
+    ylab("Maximum flipper length (cm)") +
     theme_bw() +
     theme(text = element_text(size = 18))
 ```
 
-As you can see in Figure 1, the average flipper length (cm) for all Adelie penguin species is very similar across the three islands sampled, however Adelie penguins on Torgersen had the longest flipper length on average.
+As you can see in Figure 1, the maximum flipper length (cm) for all Adelie penguins is similar across the three islands sampled, however an Adelie penguin on Torgersen had the longest maximum flipper length (cm), then Dream, then Biscoe.
 
 **References**
 
