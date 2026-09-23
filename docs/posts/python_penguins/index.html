@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -110,6 +110,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -192,9 +195,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>We are going to examine the palmer penguins data from SOURCE</p>
-<p>I am interested in finding out which penguin species and from which island have the longest average flipper length (cm)</p>
-<div id="7a4da244" class="cell" data-message="false" data-execution_count="1">
+<p>In this blog, we are going to examine the palmer penguins dataset (Gorman et al., 2014; Palmer Penguins Dataset, 2014) using python. Data were collected and made available by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica LTER.</p>
+<p>I am interested in finding out which island (recorded from 3 islands in the Palmer Archipelage, Antarctica) has the longest average flipper length (cm) for all the Adelie penguin species measured (only species with flipper length measurements from all 3 islands).</p>
+<p>I will first start by organizing or ‘tidying’ the data for our question.</p>
+<div id="ad11765d" class="cell" data-message="false" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the required libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> palmerpenguins <span class="im">import</span> load_penguins</span>
@@ -207,46 +211,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>penguins_clean <span class="op">=</span> penguins.dropna(subset<span class="op">=</span>[<span class="st">'flipper_length_mm'</span>])</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">## Create a new column: flipper_length_cm (converting mm to cm)</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>penguins_clean[<span class="st">'flipper_length_cm'</span>] <span class="op">=</span> penguins_clean[<span class="st">'flipper_length_mm'</span>]<span class="op">/</span><span class="dv">100</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the first 6 lines of the tidy penguins dataset</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(penguins_clean.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">## Filter for only the Adelie penguin species, and select only the required columns for our question (island, flipper_length_cm)</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>penguins_clean <span class="op">=</span> penguins_clean.query(<span class="st">"species == 'Adelie'"</span>).loc[:,[<span class="st">'island'</span>,<span class="st">'flipper_length_cm'</span>]]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the head of the tidy penguins dataset</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(penguins_clean.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  species     island  bill_length_mm  bill_depth_mm  flipper_length_mm  \
-0  Adelie  Torgersen            39.1           18.7              181.0   
-1  Adelie  Torgersen            39.5           17.4              186.0   
-2  Adelie  Torgersen            40.3           18.0              195.0   
-4  Adelie  Torgersen            36.7           19.3              193.0   
-5  Adelie  Torgersen            39.3           20.6              190.0   
-
-   body_mass_g     sex  year  flipper_length_cm  
-0       3750.0    male  2007               1.81  
-1       3800.0  female  2007               1.86  
-2       3250.0  female  2007               1.95  
-4       3450.0  female  2007               1.93  
-5       3650.0    male  2007               1.90  </code></pre>
+<pre><code>      island  flipper_length_cm
+0  Torgersen               1.81
+1  Torgersen               1.86
+2  Torgersen               1.95
+4  Torgersen               1.93
+5  Torgersen               1.90</code></pre>
 </div>
 </div>
-<p>Summarise the mean flipper length by penguin species and island.</p>
-<div id="331bca44" class="cell" data-execution_count="2">
+<p>Now we can group the tidied data by island, to calculate the mean flipper length in cm, and then sort the resulting means from longest to shortest.</p>
+<div id="01240ed2" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>penguins_summary <span class="op">=</span> (</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    penguins_clean</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    .loc[:,[<span class="st">'species'</span>,<span class="st">'island'</span>,<span class="st">'flipper_length_cm'</span>]]</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    .groupby([<span class="st">'species'</span>,<span class="st">'island'</span>])</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    .mean()</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    .sort_values(by<span class="op">=</span><span class="st">'flipper_length_cm'</span>,ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(penguins_summary.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     species     island  flipper_length_cm
-0     Gentoo     Biscoe           2.171870
-1  Chinstrap      Dream           1.958235
-2     Adelie  Torgersen           1.911961
-3     Adelie      Dream           1.897321
-4     Adelie     Biscoe           1.887955</code></pre>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    .groupby([<span class="st">'island'</span>])[<span class="st">'flipper_length_cm'</span>]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    .mean()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    .sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>I want to produce a clean-looking table with the three islands sorted according to longest flipper length (measured in cm) for the Adelie penguin species.</p>
+<div id="cell-table-penguin-flipper-length" class="cell" data-table-cap="Top 3 flipper length of Adelie penguin species by island." data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Adelie_flipper_table <span class="op">=</span> penguins_summary.style.hide(axis<span class="op">=</span><span class="st">"index"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Adelie_flipper_table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="table-penguin-flipper-length" class="cell-output cell-output-display" data-execution_count="3">
+<style type="text/css">
+</style>
+
+<table id="T_53ebf" class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th id="T_53ebf_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">island</th>
+<th id="T_53ebf_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">flipper_length_cm</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_53ebf_row0_col0" class="data row0 col0">Torgersen</td>
+<td id="T_53ebf_row0_col1" class="data row0 col1">1.911961</td>
+</tr>
+<tr class="even">
+<td id="T_53ebf_row1_col0" class="data row1 col0">Dream</td>
+<td id="T_53ebf_row1_col1" class="data row1 col1">1.897321</td>
+</tr>
+<tr class="odd">
+<td id="T_53ebf_row2_col0" class="data row2 col0">Biscoe</td>
+<td id="T_53ebf_row2_col1" class="data row2 col1">1.887955</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<p>Print a table with the top 5 penguins by flipper length (measured in cm) by species and the island they were sampled on.</p>
+<p>As you can see in the table, the average flipper length (cm) for all Adelie penguin species is very similar across the three islands sampled, however Adelie penguins on Torgersen had the longest flipper length on average.</p>
+<p><strong>References</strong></p>
+<p>Gorman, K. B., Williams, T. D., &amp; Fraser, W. R. (2014). Ecological sexual dimorphism and environmental variability within a community of Antarctic penguins (genus Pygoscelis). PloS one, 9(3), e90081. https://doi.org/10.1371/journal.pone.0090081</p>
+<p>Palmer Penguins [Dataset]. (2014). UCI Machine Learning Repository. https://doi.org/10.24432/C5R89W</p>
 
 
 

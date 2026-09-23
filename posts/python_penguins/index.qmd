@@ -4,9 +4,11 @@ author: "Meredith Fraser"
 date: 2026-09-22
 ---
 
-We are going to examine the palmer penguins data from SOURCE
+In this blog, we are going to examine the palmer penguins dataset (Gorman et al., 2014; Palmer Penguins Dataset, 2014) using python. Data were collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER. 
 
-I am interested in finding out which penguin species and from which island have the longest average flipper length (cm)
+I am interested in finding out which island (recorded from 3 islands in the Palmer Archipelage, Antarctica) has the longest average flipper length (cm) for all the Adelie penguin species measured (only species with flipper length measurements from all 3 islands).
+
+I will first start by organizing or 'tidying' the data for our question.
 
 ```{python}
 #| echo: true
@@ -24,33 +26,40 @@ penguins = load_penguins()
 penguins_clean = penguins.dropna(subset=['flipper_length_mm'])
 ## Create a new column: flipper_length_cm (converting mm to cm)
 penguins_clean['flipper_length_cm'] = penguins_clean['flipper_length_mm']/100
+## Filter for only the Adelie penguin species, and select only the required columns for our question (island, flipper_length_cm)
+penguins_clean = penguins_clean.query("species == 'Adelie'").loc[:,['island','flipper_length_cm']]
 
-# Print the first 6 lines of the tidy penguins dataset
+# Print the head of the tidy penguins dataset
 print(penguins_clean.head())
 ```
 
-Summarise the mean flipper length by penguin species and island.
+Now we can group the tidied data by island, to calculate the mean flipper length in cm, and then sort the resulting means from longest to shortest.
 
 ```{python}
 #| echo: true
 penguins_summary = (
     penguins_clean
-    .loc[:,['species','island','flipper_length_cm']]
-    .groupby(['species','island'])
+    .groupby(['island'])['flipper_length_cm']
     .mean()
-    .sort_values(by='flipper_length_cm',ascending=False)
+    .sort_values(ascending=False)
     .reset_index()
 )
-print(penguins_summary.head())
 ```
 
-Print a table with the top 5 penguins by flipper length (measured in cm) by species and the island they were sampled on.
+I want to produce a clean-looking table with the three islands sorted according to longest flipper length (measured in cm) for the Adelie penguin species.
 
 ```{python}
 #| echo: true
-#| label: fig-penguin-mass
-#| table-cap: "Flipper length of penguins by species."
-
-
-
+#| label: table-penguin-flipper-length
+#| table-cap: "Top 3 flipper length of Adelie penguin species by island."
+Adelie_flipper_table = penguins_summary.style.hide(axis="index")
+Adelie_flipper_table
 ```
+
+As you can see in the table, the average flipper length (cm) for all Adelie penguin species is very similar across the three islands sampled, however Adelie penguins on Torgersen had the longest flipper length on average.
+
+**References**
+
+Gorman, K. B., Williams, T. D., & Fraser, W. R. (2014). Ecological sexual dimorphism and environmental variability within a community of Antarctic penguins (genus Pygoscelis). PloS one, 9(3), e90081. https://doi.org/10.1371/journal.pone.0090081
+
+Palmer Penguins [Dataset]. (2014). UCI Machine Learning Repository. https://doi.org/10.24432/C5R89W
