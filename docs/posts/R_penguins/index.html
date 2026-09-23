@@ -193,7 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>In this blog, we are going to examine the palmer penguins dataset (Gorman et al., 2014; Palmer Penguins Dataset, 2014) using R. Data were collected and made available by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica LTER.</p>
-<p>I am interested in visualizing which island (recorded from 3 islands in the Palmer Archipelage, Antarctica) has the longest average flipper length (cm) for all the Adelie penguin species measured (only species with flipper length measurements from all 3 islands).</p>
+<p>I am interested in visualizing which island (recorded from 3 islands in the Palmer Archipelage, Antarctica) has the longest maximum flipper length (cm) for all the Adelie penguin species measured (only species with flipper length measurements from all 3 islands).</p>
 <p>I will first start by organizing or ‘tidying’ the data for our question.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -227,16 +227,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>penguins_summary <span class="ot">&lt;-</span> penguins_clean <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(island) <span class="sc">|&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean_flipper_length_cm =</span> <span class="fu">mean</span>(flipper_length_cm)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">max_flipper_length_cm =</span> <span class="fu">max</span>(flipper_length_cm)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>I want to produce a bar plot of average flipper length (cm), by island for the Adelie penguin species.</p>
+<p>I want to produce a bar plot of maximum flipper length (cm), by island for the Adelie penguin species.</p>
 <div class="cell" data-table-cap="Flipper length of species for the Adelie species">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins_summary, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> island, </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">y =</span> mean_flipper_length_cm,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">y =</span> max_flipper_length_cm,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">fill =</span> island)) <span class="sc">+</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Penguin Species"</span>) <span class="sc">+</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Flipper length (cm)"</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Maximum flipper length (cm)"</span>) <span class="sc">+</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -255,7 +255,7 @@ Figure&nbsp;1
 </div>
 </div>
 </div>
-<p>As you can see in Figure 1, the average flipper length (cm) for all Adelie penguin species is very similar across the three islands sampled, however Adelie penguins on Torgersen had the longest flipper length on average.</p>
+<p>As you can see in Figure 1, the maximum flipper length (cm) for all Adelie penguins is similar across the three islands sampled, however an Adelie penguin on Torgersen had the longest maximum flipper length (cm), then Dream, then Biscoe.</p>
 <p><strong>References</strong></p>
 <p>Gorman, K. B., Williams, T. D., &amp; Fraser, W. R. (2014). Ecological sexual dimorphism and environmental variability within a community of Antarctic penguins (genus Pygoscelis). PloS one, 9(3), e90081. https://doi.org/10.1371/journal.pone.0090081</p>
 <p>Palmer Penguins [Dataset]. (2014). UCI Machine Learning Repository. https://doi.org/10.24432/C5R89W</p>
