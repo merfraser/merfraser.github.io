@@ -22,12 +22,15 @@ To build this website, follow these steps:
 Next, within that R session, load the R virtual environment by running this code within the R session:
     > `renv::restore`
 
-Once loaded, quit the R session ('Control'+'C', then 'y' for yes to quit) to return to your terminal.
+Once loaded, quit the R session by running `q()`, to return to your terminal.
 
 (6) Now to build the site locally, return to a terminal window and run the following:
     > `uv run quarto render`
 
 
 The site will land in the ~/docs folder within the repository (once rendered, this folder includes the .html files that make this a website your browser can open and render).
+
+Once rendered, to open the local render of the site, run the following in the same terminal window:
+    > `open docs/index.html`
 
 The data required for building the Quarto blog post pages in both python and R are held in the virtual environment detailed in the pyproject.toml and renv.lock files, respectively, and do not require the network to fetch it. 
