@@ -198,7 +198,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In this blog, we are going to examine the palmer penguins dataset (Gorman et al., 2014; Palmer Penguins Dataset, 2014) using python. Data were collected and made available by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica LTER.</p>
 <p>I am interested in which penguin species tends to be the largest (in both flipper length and body mass), and investigating if there is any visible relationship between penguin flipper length (cm) and body mass (g). This is an initial examination/visualization if measured flipper length is a viable praxis for body mass (not fitting any models in this example).</p>
 <p>I will first start by organizing or ‘tidying’ the data for our question, including dropping all NAs from the dataset, converting flipper length (measured in mm) (more readable), and selecting only the columns I am interested in.</p>
-<div id="a518ff4e" class="cell" data-message="false" data-execution_count="1">
+<div id="8661eebf" class="cell" data-message="false" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the required libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> palmerpenguins <span class="im">import</span> load_penguins</span>
@@ -227,7 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Now we can group the tidied data by species and produce some summary statistics of our two variables of interest for each of the penguin species.</p>
-<div id="41a99473" class="cell" data-execution_count="2">
+<div id="6f6dcadf" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>penguins_summary <span class="op">=</span> (</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    penguins_clean</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    .groupby([<span class="st">'species'</span>])</span>
@@ -305,23 +305,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div aria-describedby="fig-penguin-bodymass-by-flipperlength-python-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 
 <style>
-  #altair-viz-6f9efdabc59e4fa4a43c68a6431bd261.vega-embed {
+  #altair-viz-2843beadf753413eb2abb9701e089c91.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-6f9efdabc59e4fa4a43c68a6431bd261.vega-embed details,
-  #altair-viz-6f9efdabc59e4fa4a43c68a6431bd261.vega-embed details summary {
+  #altair-viz-2843beadf753413eb2abb9701e089c91.vega-embed details,
+  #altair-viz-2843beadf753413eb2abb9701e089c91.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-6f9efdabc59e4fa4a43c68a6431bd261"></div>
+<div id="altair-viz-2843beadf753413eb2abb9701e089c91"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-6f9efdabc59e4fa4a43c68a6431bd261") {
-      outputDiv = document.getElementById("altair-viz-6f9efdabc59e4fa4a43c68a6431bd261");
+    if (outputDiv.id !== "altair-viz-2843beadf753413eb2abb9701e089c91") {
+      outputDiv = document.getElementById("altair-viz-2843beadf753413eb2abb9701e089c91");
     }
 
     const paths = {
