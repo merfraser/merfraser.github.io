@@ -193,69 +193,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>In this blog, we are going to examine the palmer penguins dataset (Gorman et al., 2014; Palmer Penguins Dataset, 2014) using R. Data were collected and made available by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica LTER.</p>
-<p>I am interested in visualizing which island (recorded from 3 islands in the Palmer Archipelage, Antarctica) has the longest maximum flipper length (cm) for all the Adelie penguin species measured (only species with flipper length measurements from all 3 islands).</p>
-<p>I will first start by organizing or ‘tidying’ the data for our question.</p>
+<p>I am interested in which penguin species tends to be the largest (in both flipper length and body mass), and investigating if there is any visible relationship between penguin flipper length (cm) and body mass (g). This is an initial examination/visualization if measured flipper length is a viable praxis for body mass (not fitting any models in this example).</p>
+<p>I will first start by organizing or ‘tidying’ the data for our question, including dropping all NAs from the dataset, converting flipper length (measured in mm) (more readable), and selecting only the columns I am interested in.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean up the dataset and prep for summarizing and visualizing</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>penguins_clean <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Drop `NAs` from the flipper_length_mm column (the variable we are interested in) </span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>(flipper_length_mm) <span class="sc">|&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Drop `NAs` from the flipper_length_mm and body_mass_mg columns (the variables we are interested in) </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>(flipper_length_mm, body_mass_g) <span class="sc">|&gt;</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Create a new column: flipper_length_cm (converting mm to cm)</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">flipper_length_cm =</span> flipper_length_mm<span class="sc">/</span><span class="dv">100</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Filter for only the Adelie species and select only the required columns for our question (island, flipper_length_cm)</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Adelie"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(island, flipper_length_cm)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the head of the tidy penguins dataset</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins_clean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 2
-  island    flipper_length_cm
-  &lt;fct&gt;                 &lt;dbl&gt;
-1 Torgersen              1.81
-2 Torgersen              1.86
-3 Torgersen              1.95
-4 Torgersen              1.93
-5 Torgersen              1.9 
-6 Torgersen              1.81</code></pre>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">flipper_length_cm =</span> flipper_length_mm<span class="sc">/</span><span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Select only the required columns for our question (spcies, flipper_length_cm, body_mass_g)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(species, flipper_length_cm, body_mass_g)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-<p>Now we can group the tidied data by island, to calculate the maximum flipper length in cm for all of the Adelie penguins measured on that island.</p>
+<p>Now we can group the tidied data by species and produce some summary statistics of our two variables of interest for each of the penguin species.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>penguins_summary <span class="ot">&lt;-</span> penguins_clean <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(island) <span class="sc">|&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">max_flipper_length_cm =</span> <span class="fu">max</span>(flipper_length_cm)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>penguins_summary <span class="ot">&lt;-</span> penguins_clean <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean_flipper_length_cm =</span> <span class="fu">mean</span>(flipper_length_cm),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">sd_flipper_length_cm =</span> <span class="fu">sqrt</span>(<span class="fu">var</span>(flipper_length_cm)),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">mean_body_mass_g =</span> <span class="fu">mean</span>(body_mass_g),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">sd_body_mass_g =</span> <span class="fu">sqrt</span>(<span class="fu">var</span>(body_mass_g))) </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(penguins_summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  species   mean_flipper_length_cm sd_flipper_length_cm mean_body_mass_g
+  &lt;fct&gt;                      &lt;dbl&gt;                &lt;dbl&gt;            &lt;dbl&gt;
+1 Adelie                      19.0                0.654            3701.
+2 Chinstrap                   19.6                0.713            3733.
+3 Gentoo                      21.7                0.648            5076.
+# ℹ 1 more variable: sd_body_mass_g &lt;dbl&gt;</code></pre>
 </div>
-<p>I want to produce a bar plot of maximum flipper length (cm), by island for the Adelie penguin species.</p>
-<div class="cell" data-table-cap="Flipper length of species for the Adelie species">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins_summary, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> island, </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">y =</span> max_flipper_length_cm,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">fill =</span> island)) <span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Penguin Species"</span>) <span class="sc">+</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Maximum flipper length (cm)"</span>) <span class="sc">+</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Interesting! From the summary table above, Gentoo penguins, on average, tend to have the longest flippers and greatest body mass compared to Adelie and Chinstrap penguins.</p>
+<p>Now let’s go ahead and plot flipper length (cm) by body mass (g) to do an initial check if there is any visible relationship between flipper length and body mass, by species.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>penguins_plot_data <span class="ot">&lt;-</span> penguins_clean <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">as.factor</span>(species))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins_plot_data, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_cm, </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">y =</span> body_mass_g,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">colour =</span> species)) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"Flipper length (cm)"</span>) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Body mass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="fig-Adelie-penguin-flipper-R" class="quarto-float quarto-figure quarto-figure-center anchored" width="672">
+<div id="fig-penguin-bodymass-by-flipperlength-R" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-Adelie-penguin-flipper-R-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-Adelie-penguin-flipper-R-1.png" id="fig-Adelie-penguin-flipper-R" class="img-fluid figure-img" width="672">
+<div aria-describedby="fig-penguin-bodymass-by-flipperlength-R-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-penguin-bodymass-by-flipperlength-R-1.png" class="img-fluid figure-img" width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-Adelie-penguin-flipper-R-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-penguin-bodymass-by-flipperlength-R-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Flipper length by body mass
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>As you can see in Figure 1, the maximum flipper length (cm) for all Adelie penguins is similar across the three islands sampled, however an Adelie penguin on Torgersen had the longest maximum flipper length (cm), then Dream, then Biscoe.</p>
+<p>In Figure 1, when we plot flipper length (cm) by body mass (g), colour-coded by species, we can see a clear relationship between the two variables where the points are organized in what appears to be a positive linear trend.</p>
 <p><strong>References</strong></p>
-<p>Gorman, K. B., Williams, T. D., &amp; Fraser, W. R. (2014). Ecological sexual dimorphism and environmental variability within a community of Antarctic penguins (genus Pygoscelis). PloS one, 9(3), e90081. https://doi.org/10.1371/journal.pone.0090081</p>
-<p>Palmer Penguins [Dataset]. (2014). UCI Machine Learning Repository. https://doi.org/10.24432/C5R89W</p>
+<p>Gorman, K. B., Williams, T. D., &amp; Fraser, W. R. (2014). Ecological sexual dimorphism and environmental variability within a community of Antarctic penguins (genus Pygoscelis). PloS one, 9(3), e90081. <a href="https://doi.org/10.1371/journal.pone.0090081">https://doi.org/10.1371/journal.pone.0090081</a></p>
+<p>Palmer Penguins [Dataset]. (2014). UCI Machine Learning Repository. <a href="https://doi.org/10.24432/C5R89W">https://doi.org/10.24432/C5R89W</a></p>
 
 
 

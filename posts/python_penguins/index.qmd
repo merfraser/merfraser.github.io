@@ -6,9 +6,9 @@ date: 2026-09-23
 
 In this blog, we are going to examine the palmer penguins dataset (Gorman et al., 2014; Palmer Penguins Dataset, 2014) using python. Data were collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER. 
 
-I am interested in finding out which island (recorded from 3 islands in the Palmer Archipelage, Antarctica) has the longest (maximum) flipper length (cm) for all the Adelie penguin species measured (only species with flipper length measurements from all 3 islands).
+I am interested in which penguin species tends to be the largest (in both flipper length and body mass), and investigating if there is any visible relationship between penguin flipper length (cm) and body mass (g). This is an initial examination/visualization if measured flipper length is a viable praxis for body mass (not fitting any models in this example).
 
-I will first start by organizing or 'tidying' the data for our question.
+I will first start by organizing or 'tidying' the data for our question, including dropping all NAs from the dataset, converting flipper length (measured in mm) (more readable), and selecting only the columns I am interested in.
 
 ```{python}
 #| echo: true
@@ -17,50 +17,61 @@ I will first start by organizing or 'tidying' the data for our question.
 # Import the required libraries
 import pandas as pd
 from palmerpenguins import load_penguins
+import altair as alt
 
 # Load the penguins dataset
 penguins = load_penguins()
 
 # Clean up the dataset and prep for summarizing and visualizing
-## Drop `NaNs` from the flipper_length_mm column (the variable we are interested in) 
-penguins_clean = penguins.dropna(subset=['flipper_length_mm'])
+## Drop `NAs` from the flipper_length_mm and body_mass_mg columns (the variables we are interested in) 
+penguins_clean = penguins.dropna(subset=['flipper_length_mm','body_mass_g'])
 ## Create a new column: flipper_length_cm (converting mm to cm)
-penguins_clean['flipper_length_cm'] = penguins_clean['flipper_length_mm']/100
-## Filter for only the Adelie penguin species, and select only the required columns for our question (island, flipper_length_cm)
-penguins_clean = penguins_clean.query("species == 'Adelie'").loc[:,['island','flipper_length_cm']]
+penguins_clean['flipper_length_cm'] = penguins_clean['flipper_length_mm']/10
+## Index only the required columns for our question (spcies, flipper_length_cm, body_mass_g)
+penguins_clean = penguins_clean[['species','flipper_length_cm','body_mass_g']]
 
 # Print the head of the tidy penguins dataset
 print(penguins_clean.head())
 ```
 
-Now we can group the tidied data by island, to calculate the maximum flipper length, in cm, and then sort the resulting maximum flipper length measurements from longest to shortest.
+Now we can group the tidied data by species and produce some summary statistics of our two variables of interest for each of the penguin species.
 
 ```{python}
 #| echo: true
 penguins_summary = (
     penguins_clean
-    .groupby(['island'])['flipper_length_cm']
-    .max()
-    .round(3)
-    .sort_values(ascending=False)
+    .groupby(['species'])
+    .aggregate(["mean","std"])
     .reset_index()
 )
+penguins_summary
 ```
 
-I want to produce a clean-looking table with the three islands sorted according to longest maximum flipper length (measured in cm) for the Adelie penguin species.
+Interesting! From the summary table above, Gentoo penguins, on average, tend to have the longest flippers and greatest body mass compared to Adelie and Chinstrap penguins. 
+
+Now let's go ahead and plot flipper length (cm) by body mass (g) to do an initial check if there is any visible relationship between flipper length and body mass.
 
 ```{python}
 #| echo: true
-#| label: table-penguin-flipper-length
-#| table-cap: "Top 3 flipper length of Adelie penguin species by island."
-Adelie_flipper_table = penguins_summary.style.hide(axis="index")
-Adelie_flipper_table
+#| label: fig-penguin-bodymass-by-flipperlength-python
+#| fig-cap: "Flipper length by body mass"
+
+alt.Chart(penguins_clean).mark_point().encode(
+    x=alt.X('flipper_length_cm', 
+        scale=alt.Scale(domain=[16, 24]),      
+        axis=alt.Axis(title='Flipper length (cm)')    
+    ),
+    y=alt.Y('body_mass_g', 
+        scale=alt.Scale(domain=[2000,7000]),      
+        axis=alt.Axis(title='Body mass (g)')    
+    )
+)
 ```
 
-As you can see in the table, the maximum flipper length (cm) for all Adelie penguins is similar across the three islands sampled, however an Adelie penguin on Torgersen had the longest maximum flipper length (cm), then Dream, then Biscoe.
+In Figure 1, when we plot flipper length (cm) by body mass (g), colour-coded by species, we can see a clear relationship between the two variables where the points are organized in what appears to be a positive linear trend.
 
 **References**
 
-Gorman, K. B., Williams, T. D., & Fraser, W. R. (2014). Ecological sexual dimorphism and environmental variability within a community of Antarctic penguins (genus Pygoscelis). PloS one, 9(3), e90081. https://doi.org/10.1371/journal.pone.0090081
+Gorman, K. B., Williams, T. D., & Fraser, W. R. (2014). Ecological sexual dimorphism and environmental variability within a community of Antarctic penguins (genus Pygoscelis). PloS one, 9(3), e90081. [https://doi.org/10.1371/journal.pone.0090081](https://doi.org/10.1371/journal.pone.0090081)
 
-Palmer Penguins [Dataset]. (2014). UCI Machine Learning Repository. https://doi.org/10.24432/C5R89W
+Palmer Penguins [Dataset]. (2014). UCI Machine Learning Repository. [https://doi.org/10.24432/C5R89W](https://doi.org/10.24432/C5R89W)
